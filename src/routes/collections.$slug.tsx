@@ -76,7 +76,7 @@ function CollectionPage() {
           </Reveal>
 
           <div className="mt-16 grid gap-4 md:grid-cols-2 lg:grid-cols-12 lg:gap-6">
-            {c.gallery.map((img, i) => {
+            {c.gallery.map((img: { src: string; w: number; h: number; alt: string }, i: number) => {
               const isHero = i === 0;
               const span = isHero
                 ? "lg:col-span-7 lg:row-span-2"
