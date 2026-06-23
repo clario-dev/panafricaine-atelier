@@ -1,20 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import surmesure1 from "@/assets/gallery-surmesure-1.jpg";
 import surmesure2 from "@/assets/gallery-surmesure-2.jpg";
 import { PageHero, PageShell, Reveal, SectionLabel } from "@/components/site/shared";
-
-export const Route = createFileRoute("/sur-mesure")({
-  head: () => ({
-    meta: [
-      { title: "Sur-Mesure — Couture Panafricaine" },
-      { name: "description", content: "Notre service le plus rare : créations sur-mesure uniques, patronnées à vos 32 mensurations, dans nos ateliers de Cotonou et Lomé." },
-      { property: "og:title", content: "Sur-Mesure — Couture Panafricaine" },
-      { property: "og:description", content: "Une création unique, dialogue d'une vie entre client et artisan." },
-      { property: "og:image", content: surmesure1 },
-    ],
-  }),
-  component: SurMesurePage,
-});
+import { Seo } from "@/components/site/Seo";
 
 const PILLARS = [
   { t: "Excellence artisanale", d: "Le geste avant la machine, toujours." },
@@ -30,9 +18,14 @@ const TEXTILES = [
   { id: "aso", label: "Aso-Oké d'Or", origin: "Iseyin, Nigeria", swatch: "linear-gradient(135deg,#3a2e0a,#0a0a0a 70%)" },
 ];
 
-function SurMesurePage() {
+export default function SurMesure() {
   return (
     <PageShell>
+      <Seo
+        title="Sur-Mesure — Couture Panafricaine"
+        description="Notre service le plus rare : créations sur-mesure uniques, patronnées à vos 32 mensurations, dans nos ateliers de Cotonou et Lomé."
+        image={surmesure1}
+      />
       <PageHero
         eyebrow="Sur-Mesure"
         title="Une création."
@@ -57,7 +50,6 @@ function SurMesurePage() {
         </div>
       </section>
 
-      {/* Pillars */}
       <section className="relative px-6 py-32 lg:px-16 lg:py-48">
         <div className="mx-auto max-w-7xl">
           <Reveal>
@@ -84,7 +76,6 @@ function SurMesurePage() {
         </div>
       </section>
 
-      {/* Textiles */}
       <section className="relative px-6 py-32 lg:px-16 lg:py-48">
         <div className="mx-auto max-w-7xl">
           <Reveal>

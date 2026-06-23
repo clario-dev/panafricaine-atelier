@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import heroDrape from "@/assets/hero-drape.jpg";
@@ -10,18 +10,7 @@ import {
   Reveal,
   SectionLabel,
 } from "@/components/site/shared";
-
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Couture Panafricaine — L'Art de la Mesure" },
-      { name: "description", content: "Maison de couture panafricaine sur-mesure. Créations exclusives où l'excellence artisanale rencontre l'élégance contemporaine africaine. Ateliers Cotonou & Lomé." },
-      { property: "og:title", content: "Couture Panafricaine — L'Art de la Mesure" },
-      { property: "og:description", content: "Maison de couture panafricaine sur-mesure." },
-    ],
-  }),
-  component: Index,
-});
+import { Seo } from "@/components/site/Seo";
 
 function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -183,9 +172,7 @@ function AtelierTeaser() {
   );
 }
 
-// ---- Spectacular Collections Showcase --------------------------------------
 function CollectionsMarquee() {
-  // duplicate the list for seamless loop
   const loop = [...COLLECTIONS, ...COLLECTIONS, ...COLLECTIONS];
 
   return (
@@ -210,9 +197,7 @@ function CollectionsMarquee() {
         </div>
       </div>
 
-      {/* Cinematic auto-scrolling reel */}
       <div className="relative mt-20">
-        {/* Edge fades */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-ink to-transparent lg:w-48" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-ink to-transparent lg:w-48" />
 
@@ -224,8 +209,7 @@ function CollectionsMarquee() {
           {loop.map((c, i) => (
             <Link
               key={`${c.slug}-${i}`}
-              to="/collections/$slug"
-              params={{ slug: c.slug }}
+              to={`/collections/${c.slug}`}
               className="group relative block shrink-0 overflow-hidden rounded-sm"
               style={{ width: "min(78vw, 480px)" }}
             >
@@ -312,9 +296,14 @@ function Pillars() {
   );
 }
 
-function Index() {
+export default function Index() {
   return (
     <PageShell>
+      <Seo
+        title="Couture Panafricaine — L'Art de la Mesure"
+        description="Maison de couture panafricaine sur-mesure. Créations exclusives où l'excellence artisanale rencontre l'élégance contemporaine africaine. Ateliers Cotonou & Lomé."
+        image={heroDrape}
+      />
       <Hero />
       <AtelierTeaser />
       <CollectionsMarquee />

@@ -1,19 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { PageHero, PageShell, Reveal, CONTACT } from "@/components/site/shared";
-
-export const Route = createFileRoute("/consultation")({
-  head: () => ({
-    meta: [
-      { title: "Consultation — Couture Panafricaine" },
-      { name: "description", content: "Réservez votre consultation privée. Quatre étapes feutrées pour ouvrir le dialogue avec nos artisans." },
-      { property: "og:title", content: "Consultation — Couture Panafricaine" },
-      { property: "og:description", content: "Atelier virtuel — Réservez une consultation privée." },
-    ],
-  }),
-  component: ConsultationPage,
-});
+import { Seo } from "@/components/site/Seo";
 
 const CREATIONS = [
   { id: "costume", label: "Costume", sub: "Tailleur exécutif" },
@@ -31,7 +19,7 @@ const TEXTILES = [
   { id: "aso", label: "Aso-Oké d'Or", origin: "Iseyin, Nigeria", swatch: "linear-gradient(135deg,#3a2e0a,#0a0a0a 70%)" },
 ];
 
-function ConsultationPage() {
+export default function Consultation() {
   const [step, setStep] = useState(0);
   const [creation, setCreation] = useState<string | null>(null);
   const [textile, setTextile] = useState<string | null>(null);
@@ -43,6 +31,10 @@ function ConsultationPage() {
 
   return (
     <PageShell>
+      <Seo
+        title="Consultation — Couture Panafricaine"
+        description="Réservez votre consultation privée. Quatre étapes feutrées pour ouvrir le dialogue avec nos artisans."
+      />
       <PageHero
         eyebrow="Atelier Virtuel"
         title="Réservez votre"

@@ -1,21 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import embroidery from "@/assets/atelier-embroidery.jpg";
 import surmesure1 from "@/assets/gallery-surmesure-1.jpg";
 import surmesure2 from "@/assets/gallery-surmesure-2.jpg";
 import { PageHero, PageShell, Reveal, SectionLabel, CONTACT } from "@/components/site/shared";
-
-export const Route = createFileRoute("/atelier")({
-  head: () => ({
-    meta: [
-      { title: "L'Atelier — Couture Panafricaine" },
-      { name: "description", content: "Au cœur de nos ateliers de Cotonou et Lomé : artisans, étoffes nobles et coupe sur-mesure d'inspiration panafricaine." },
-      { property: "og:title", content: "L'Atelier — Couture Panafricaine" },
-      { property: "og:description", content: "Cotonou & Lomé — l'atelier d'une nouvelle génération de couture." },
-      { property: "og:image", content: embroidery },
-    ],
-  }),
-  component: AtelierPage,
-});
+import { Seo } from "@/components/site/Seo";
 
 const STEPS = [
   { n: "I", title: "Consultation Privée", desc: "Échange intime sur la création et le port souhaité." },
@@ -25,9 +13,14 @@ const STEPS = [
   { n: "V", title: "Livraison Exclusive", desc: "Remise cérémonielle, écrin signé Couture Panafricaine." },
 ];
 
-function AtelierPage() {
+export default function Atelier() {
   return (
     <PageShell>
+      <Seo
+        title="L'Atelier — Couture Panafricaine"
+        description="Au cœur de nos ateliers de Cotonou et Lomé : artisans, étoffes nobles et coupe sur-mesure d'inspiration panafricaine."
+        image={embroidery}
+      />
       <PageHero
         eyebrow="L'Atelier"
         title="Une nouvelle génération"
@@ -35,7 +28,6 @@ function AtelierPage() {
         intro="Entre Cotonou et Lomé, deux ateliers d'exception conjuguent l'héritage textile panafricain et la rigueur d'une coupe contemporaine. Pour celles et ceux qui considèrent le vêtement comme une architecture."
       />
 
-      {/* Two-col editorial */}
       <section className="relative px-6 pb-32 lg:px-16 lg:pb-48">
         <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-12 lg:gap-20">
           <Reveal>
@@ -94,7 +86,6 @@ function AtelierPage() {
         </div>
       </section>
 
-      {/* Process */}
       <section className="relative px-6 py-32 lg:px-16 lg:py-48 grain">
         <div className="mx-auto max-w-7xl">
           <Reveal>
@@ -132,7 +123,6 @@ function AtelierPage() {
         </div>
       </section>
 
-      {/* Atelier images */}
       <section className="relative px-6 pb-32 lg:px-16 lg:pb-48">
         <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-2">
           <Reveal>

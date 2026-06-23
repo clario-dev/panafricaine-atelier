@@ -1,21 +1,14 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { COLLECTIONS, PageHero, PageShell, Reveal } from "@/components/site/shared";
+import { Seo } from "@/components/site/Seo";
 
-export const Route = createFileRoute("/collections/")({
-  head: () => ({
-    meta: [
-      { title: "Collections — Couture Panafricaine" },
-      { name: "description", content: "Découvrez nos quatre collections : Agbada & Prestige, Ligne Horizon, Femmes Couture, L'Atelier Sur-Mesure." },
-      { property: "og:title", content: "Collections — Couture Panafricaine" },
-      { property: "og:description", content: "Quatre lignes, un seul geste." },
-    ],
-  }),
-  component: CollectionsIndex,
-});
-
-function CollectionsIndex() {
+export default function CollectionsIndex() {
   return (
     <PageShell>
+      <Seo
+        title="Collections — Couture Panafricaine"
+        description="Découvrez nos quatre collections : Agbada & Prestige, Ligne Horizon, Femmes Couture, L'Atelier Sur-Mesure."
+      />
       <PageHero
         eyebrow="Collections"
         title="Quatre lignes."
@@ -28,8 +21,7 @@ function CollectionsIndex() {
           {COLLECTIONS.map((c, i) => (
             <Reveal key={c.slug} delay={i * 0.05}>
               <Link
-                to="/collections/$slug"
-                params={{ slug: c.slug }}
+                to={`/collections/${c.slug}`}
                 className="group relative grid overflow-hidden rounded-sm border border-border bg-graphite/40 transition-all duration-700 hover:border-accent/40 md:grid-cols-12"
               >
                 <div className="relative aspect-[4/5] md:col-span-5 md:aspect-auto">

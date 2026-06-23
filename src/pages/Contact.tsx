@@ -1,21 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { CONTACT, PageHero, PageShell, Reveal, SectionLabel } from "@/components/site/shared";
+import { Seo } from "@/components/site/Seo";
 
-export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact — Couture Panafricaine" },
-      { name: "description", content: `Joignez nos ateliers de Cotonou et Lomé. Téléphone ${CONTACT.phone}.` },
-      { property: "og:title", content: "Contact — Couture Panafricaine" },
-      { property: "og:description", content: "Cotonou & Lomé — Téléphone, email, ateliers." },
-    ],
-  }),
-  component: ContactPage,
-});
-
-function ContactPage() {
+export default function Contact() {
   return (
     <PageShell>
+      <Seo
+        title="Contact — Couture Panafricaine"
+        description={`Joignez nos ateliers de Cotonou et Lomé. Téléphone ${CONTACT.phone}.`}
+      />
       <PageHero
         eyebrow="Contact"
         title="Écrivez-nous,"
@@ -25,7 +17,6 @@ function ContactPage() {
 
       <section className="relative px-6 pb-32 lg:px-16 lg:pb-48">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-12">
-          {/* Contact details */}
           <div className="lg:col-span-5 space-y-10">
             <Reveal>
               <div>
@@ -74,7 +65,6 @@ function ContactPage() {
             </Reveal>
           </div>
 
-          {/* Form */}
           <Reveal delay={0.15}>
             <div className="lg:col-span-7 glass-panel rounded-md p-8 lg:p-12">
               <h2 className="font-display text-2xl text-ivory">Adressez-nous un message</h2>
