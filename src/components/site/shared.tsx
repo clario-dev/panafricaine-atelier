@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, type ReactNode } from "react";
 import logoAsset from "@/assets/logo.asset.json";
@@ -106,7 +106,7 @@ export const CONTACT = {
 };
 
 // ---- Nav -------------------------------------------------------------------
-const NAV: { label: string; to: string; sub?: { label: string; to: string; params?: Record<string, string> }[] }[] = [
+const NAV: { label: string; to: string; sub?: { label: string; to: string }[] }[] = [
   { label: "Accueil", to: "/" },
   { label: "L'Atelier", to: "/atelier" },
   {
@@ -116,8 +116,7 @@ const NAV: { label: string; to: string; sub?: { label: string; to: string; param
       { label: "Toutes les collections", to: "/collections" },
       ...COLLECTIONS.map((c) => ({
         label: c.title,
-        to: "/collections/$slug",
-        params: { slug: c.slug },
+        to: `/collections/${c.slug}`,
       })),
     ],
   },
@@ -143,7 +142,7 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const [openSub, setOpenSub] = useState<string | null>(null);
   const [mobileSubOpen, setMobileSubOpen] = useState(false);
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -200,9 +199,8 @@ export function Nav() {
                         <div className="glass-panel min-w-[260px] rounded-2xl p-2">
                           {item.sub.map((s) => (
                             <Link
-                              key={s.label}
-                              to={s.to as never}
-                              params={s.params as never}
+                              key={s.to}
+                              to={s.to}
                               className="block rounded-xl px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-ivory/75 transition-colors hover:bg-accent/10 hover:text-accent"
                             >
                               {s.label}
@@ -278,9 +276,8 @@ export function Nav() {
                         <div className="pb-3 pl-4">
                           {item.sub.map((s) => (
                             <Link
-                              key={s.label}
-                              to={s.to as never}
-                              params={s.params as never}
+                              key={s.to}
+                              to={s.to}
                               className="block py-2 font-mono text-[11px] uppercase tracking-[0.2em] text-ivory/70 hover:text-accent"
                             >
                               {s.label}
@@ -398,10 +395,7 @@ export function Footer() {
               {CONTACT.cities.map((c) => (
                 <div key={c}>{c}</div>
               ))}
-              <a
-                className="mt-3 inline-block text-ivory hover:text-accent"
-                href={CONTACT.phoneHref}
-              >
+              <a className="mt-3 inline-block text-ivory hover:text-accent" href={CONTACT.phoneHref}>
                 {CONTACT.phone}
               </a>
               <br />
