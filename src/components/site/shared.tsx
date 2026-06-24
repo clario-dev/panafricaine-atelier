@@ -1,21 +1,36 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type ImgHTMLAttributes, type ReactNode } from "react";
 import logoAsset from "@/assets/logo.asset.json";
 
-// ---- Collections data ------------------------------------------------------
-import collAgbada from "@/assets/collection-agbada.jpg";
-import collHorizon from "@/assets/collection-horizon.jpg";
-import collSurMesure from "@/assets/collection-surmesure.jpg";
-import embroidery from "@/assets/atelier-embroidery.jpg";
-import gAgbada1 from "@/assets/gallery-agbada-1.jpg";
-import gAgbada2 from "@/assets/gallery-agbada-2.jpg";
-import gHorizon1 from "@/assets/gallery-horizon-1.jpg";
-import gHorizon2 from "@/assets/gallery-horizon-2.jpg";
-import gFemmes1 from "@/assets/gallery-femmes-1.jpg";
-import gFemmes2 from "@/assets/gallery-femmes-2.jpg";
-import gSurMesure1 from "@/assets/gallery-surmesure-1.jpg";
-import gSurMesure2 from "@/assets/gallery-surmesure-2.jpg";
+import agbadaGoldLarge from "@/assets/generated/agbada-gold-large.webp.asset.json";
+import agbadaGoldThumb from "@/assets/generated/agbada-gold-thumb.webp.asset.json";
+import agbadaWhiteLarge from "@/assets/generated/agbada-white-large.webp.asset.json";
+import agbadaWhiteThumb from "@/assets/generated/agbada-white-thumb.webp.asset.json";
+import femmesBlueLarge from "@/assets/generated/femmes-blue-large.webp.asset.json";
+import femmesBlueThumb from "@/assets/generated/femmes-blue-thumb.webp.asset.json";
+import femmesLilacLarge from "@/assets/generated/femmes-lilac-large.webp.asset.json";
+import femmesLilacThumb from "@/assets/generated/femmes-lilac-thumb.webp.asset.json";
+import horizonForestLarge from "@/assets/generated/horizon-forest-large.webp.asset.json";
+import horizonForestThumb from "@/assets/generated/horizon-forest-thumb.webp.asset.json";
+import horizonGreyLarge from "@/assets/generated/horizon-grey-large.webp.asset.json";
+import horizonGreyThumb from "@/assets/generated/horizon-grey-thumb.webp.asset.json";
+import surmesureBlackLarge from "@/assets/generated/surmesure-black-large.webp.asset.json";
+import surmesureBlackThumb from "@/assets/generated/surmesure-black-thumb.webp.asset.json";
+import surmesureIndigoLarge from "@/assets/generated/surmesure-indigo-large.webp.asset.json";
+import surmesureIndigoThumb from "@/assets/generated/surmesure-indigo-thumb.webp.asset.json";
+import surmesureLimeLarge from "@/assets/generated/surmesure-lime-large.webp.asset.json";
+import surmesureLimeThumb from "@/assets/generated/surmesure-lime-thumb.webp.asset.json";
+
+export type ResponsiveAsset = {
+  src: string;
+  thumb: string;
+  srcSet: string;
+  w: number;
+  h: number;
+  alt: string;
+  sizes?: string;
+};
 
 export type Collection = {
   slug: string;
@@ -25,9 +40,92 @@ export type Collection = {
   tagline: string;
   desc: string;
   longDesc: string;
-  cover: string;
-  gallery: { src: string; w: number; h: number; alt: string }[];
+  cover: ResponsiveAsset;
+  gallery: ResponsiveAsset[];
 };
+
+function assetPair(
+  large: { url: string },
+  thumb: { url: string },
+  w: number,
+  h: number,
+  alt: string,
+  sizes = "(min-width: 1280px) 32vw, (min-width: 768px) 42vw, 92vw",
+): ResponsiveAsset {
+  return {
+    src: large.url,
+    thumb: thumb.url,
+    srcSet: `${thumb.url} 640w, ${large.url} 1280w`,
+    w,
+    h,
+    alt,
+    sizes,
+  };
+}
+
+const imgAgbadaGold = assetPair(
+  agbadaGoldLarge,
+  agbadaGoldThumb,
+  1280,
+  1280,
+  "Tunique d'apparat dorée aux détails brodés",
+);
+const imgAgbadaWhite = assetPair(
+  agbadaWhiteLarge,
+  agbadaWhiteThumb,
+  1280,
+  1280,
+  "Tunique ivoire à parement graphique argenté",
+);
+const imgHorizonForest = assetPair(
+  horizonForestLarge,
+  horizonForestThumb,
+  1280,
+  1280,
+  "Ensemble vert profond à finitions dorées",
+);
+const imgHorizonGrey = assetPair(
+  horizonGreyLarge,
+  horizonGreyThumb,
+  1280,
+  1280,
+  "Tenue grise minimaliste à liserés noirs",
+);
+const imgFemmesLilac = assetPair(
+  femmesLilacLarge,
+  femmesLilacThumb,
+  1280,
+  1280,
+  "Pièce lilas couture aux plis architecturés",
+);
+const imgFemmesBlue = assetPair(
+  femmesBlueLarge,
+  femmesBlueThumb,
+  1280,
+  1280,
+  "Pièce bleu lumineux aux détails perforés",
+);
+const imgSurMesureIndigo = assetPair(
+  surmesureIndigoLarge,
+  surmesureIndigoThumb,
+  1280,
+  1280,
+  "Ensemble indigo rayé avec broderie signature",
+);
+const imgSurMesureLime = assetPair(
+  surmesureLimeLarge,
+  surmesureLimeThumb,
+  1280,
+  1280,
+  "Pièce vert chartreuse aux découpes contemporaines",
+);
+const imgSurMesureBlack = assetPair(
+  surmesureBlackLarge,
+  surmesureBlackThumb,
+  1280,
+  1280,
+  "Pièce noire couture à piqûres contrastées",
+);
 
 export const COLLECTIONS: Collection[] = [
   {
@@ -36,16 +134,11 @@ export const COLLECTIONS: Collection[] = [
     title: "Agbada & Prestige",
     tag: "Cérémonie",
     tagline: "Tailleur cérémoniel de haute tradition",
-    desc: "Brodé main, fil d'or, étoffes nobles d'Afrique de l'Ouest.",
+    desc: "Volumes d'apparat, détails brodés et étoffes solennelles.",
     longDesc:
-      "L'Agbada réinventée — silhouette monumentale, broderie or à la main, étoffes d'Iseyin et de Bamako. Une pièce cérémonielle pensée pour celles et ceux qui considèrent le vêtement comme une architecture vivante.",
-    cover: collAgbada,
-    gallery: [
-      { src: gAgbada1, w: 1280, h: 1600, alt: "Agbada doré porté en studio" },
-      { src: gAgbada2, w: 1600, h: 1200, alt: "Broderie or sur soie noire" },
-      { src: collAgbada, w: 1280, h: 1600, alt: "Détail cérémoniel" },
-      { src: embroidery, w: 1080, h: 1600, alt: "Broderie main fil d'or" },
-    ],
+      "L'Agbada réinventée — une présence sculpturale, des parements précis et une noblesse textile pensée pour les grandes cérémonies. Chaque pièce déploie la majesté panafricaine avec retenue, force et raffinement.",
+    cover: imgAgbadaGold,
+    gallery: [imgAgbadaGold, imgAgbadaWhite, imgSurMesureLime],
   },
   {
     slug: "ligne-horizon",
@@ -53,31 +146,23 @@ export const COLLECTIONS: Collection[] = [
     title: "Ligne Horizon",
     tag: "Executive",
     tagline: "Vestiaire exécutif moderne",
-    desc: "Coupe sculptée, étoffes techniques, allure architecturée.",
+    desc: "Coupe nette, lignes architecturées, présence contemporaine.",
     longDesc:
-      "La Ligne Horizon est le vestiaire d'un panafricanisme contemporain — costumes deux-pièces aux épaules naturelles, étoffes italiennes, finitions invisibles. Le pouvoir au quotidien, taillé sans concession.",
-    cover: collHorizon,
-    gallery: [
-      { src: gHorizon1, w: 1280, h: 1600, alt: "Costume noir exécutif" },
-      { src: gHorizon2, w: 1600, h: 1200, alt: "Détail boutonnage costume" },
-      { src: collHorizon, w: 1280, h: 1600, alt: "Vestiaire exécutif" },
-    ],
+      "La Ligne Horizon traduit un vestiaire panafricain contemporain : silhouettes épurées, structures sobres, matières profondes et finitions nettes. Une élégance de pouvoir, calme et assurée.",
+    cover: imgHorizonForest,
+    gallery: [imgHorizonForest, imgHorizonGrey, imgSurMesureBlack],
   },
   {
     slug: "femmes-couture",
     n: "03",
     title: "Femmes Couture",
     tag: "Féminin",
-    tagline: "Robes d'exception & cérémonie féminine",
-    desc: "Drapés sculptés, perlages, broderies fil d'or.",
+    tagline: "Couleurs sculptées & sophistication couture",
+    desc: "Teintes lumineuses, poésie des détails et finitions délicates.",
     longDesc:
-      "Pour la femme panafricaine moderne : robes longues, drapés sculptés, broderies de perles et fil d'or. Chaque création est patronnée individuellement, dans le silence de l'atelier.",
-    cover: gFemmes1,
-    gallery: [
-      { src: gFemmes1, w: 1280, h: 1600, alt: "Robe ivoire cérémonielle" },
-      { src: gFemmes2, w: 1280, h: 1600, alt: "Détail épaule brodée or" },
-      { src: embroidery, w: 1080, h: 1600, alt: "Détail broderie" },
-    ],
+      "Femmes Couture célèbre la couleur, la douceur des volumes et l'émotion du détail. Chaque création compose une allure sophistiquée, contemporaine et précieuse, dans l'esprit d'une maison de couture affirmée.",
+    cover: imgFemmesLilac,
+    gallery: [imgFemmesLilac, imgFemmesBlue, imgAgbadaWhite],
   },
   {
     slug: "atelier-sur-mesure",
@@ -85,27 +170,24 @@ export const COLLECTIONS: Collection[] = [
     title: "L'Atelier Sur-Mesure",
     tag: "Exclusif",
     tagline: "Créations uniques — sur invitation",
-    desc: "Dialogue d'une vie entre client et artisan.",
+    desc: "Dialogue d'atelier, choix des étoffes et finitions signature.",
     longDesc:
-      "Notre service le plus rare : une création unique, conçue à quatre mains avec vous, dans nos ateliers de Cotonou et Lomé. Choix des étoffes, croquis, patronage individuel, deux à trois essayages.",
-    cover: collSurMesure,
-    gallery: [
-      { src: collSurMesure, w: 1280, h: 1600, alt: "Pièce sur-mesure" },
-      { src: gSurMesure1, w: 1600, h: 1200, alt: "Atelier — patronage" },
-      { src: gSurMesure2, w: 1280, h: 1600, alt: "Étoffes nobles pliées" },
-    ],
+      "Notre service le plus rare : une création pensée avec vous, pièce après pièce, détail après détail. L'Atelier Sur-Mesure est l'espace où la coupe, la broderie et l'identité personnelle se rencontrent sans compromis.",
+    cover: imgSurMesureIndigo,
+    gallery: [imgSurMesureIndigo, imgSurMesureLime, imgSurMesureBlack],
   },
 ];
 
-// ---- Contact ---------------------------------------------------------------
 export const CONTACT = {
   phone: "+229 01 96 68 35 57",
-  phoneHref: "tel:+22901966835557",
+  phoneHref: "tel:+2290196683557",
+  whatsapp: `https://wa.me/2290196683557?text=${encodeURIComponent(
+    "Bonjour Couture Panafricaine, je souhaite réserver un échange privé.",
+  )}`,
   email: "atelier@couture-panafricaine.com",
   cities: ["Cotonou — Bénin", "Lomé — Togo"],
 };
 
-// ---- Nav -------------------------------------------------------------------
 const NAV: { label: string; to: string; sub?: { label: string; to: string }[] }[] = [
   { label: "Accueil", to: "/" },
   { label: "L'Atelier", to: "/atelier" },
@@ -121,14 +203,50 @@ const NAV: { label: string; to: string; sub?: { label: string; to: string }[] }[
     ],
   },
   { label: "Sur-Mesure", to: "/sur-mesure" },
-  { label: "Consultation", to: "/consultation" },
   { label: "Contact", to: "/contact" },
 ];
 
+export function SmartImage({
+  image,
+  alt,
+  sizes,
+  className = "",
+  loading = "lazy",
+  fetchPriority,
+  ...props
+}: Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "srcSet" | "sizes" | "width" | "height"> & {
+  image: ResponsiveAsset;
+}) {
+  return (
+    <img
+      src={image.thumb}
+      srcSet={image.srcSet}
+      sizes={sizes ?? image.sizes}
+      alt={alt ?? image.alt}
+      width={image.w}
+      height={image.h}
+      loading={loading}
+      decoding="async"
+      fetchPriority={fetchPriority}
+      className={className}
+      {...props}
+    />
+  );
+}
+
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <Link to="/" className={`flex items-center gap-3 ${className}`}>
-      <img src={logoAsset.url} alt="Couture Panafricaine" className="h-9 w-9 object-contain" />
+    <Link to="/" className={`flex items-center gap-3 ${className}`} aria-label="Retour à l'accueil Couture Panafricaine">
+      <img
+        src={logoAsset.url}
+        alt="Couture Panafricaine"
+        width={96}
+        height={96}
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
+        className="h-9 w-9 rounded-full object-contain"
+      />
       <div className="hidden sm:flex flex-col leading-none">
         <span className="font-display text-[15px] tracking-tight text-ivory">COUTURE</span>
         <span className="font-mono text-[9px] tracking-[0.3em] text-accent uppercase">Panafricaine</span>
@@ -154,6 +272,7 @@ export function Nav() {
   useEffect(() => {
     setOpen(false);
     setOpenSub(null);
+    setMobileSubOpen(false);
   }, [pathname]);
 
   return (
@@ -165,7 +284,7 @@ export function Nav() {
     >
       <div className="glass-panel mx-auto flex max-w-7xl items-center justify-between rounded-full px-5 py-3">
         <Logo />
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden lg:flex items-center gap-1" aria-label="Navigation principale">
           {NAV.map((item) => {
             const isActive = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
             if (item.sub) {
@@ -181,9 +300,11 @@ export function Nav() {
                     className={`group relative inline-flex items-center gap-1 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] transition-colors ${
                       isActive ? "text-accent" : "text-ivory/70 hover:text-accent"
                     }`}
+                    aria-expanded={openSub === item.to}
+                    aria-haspopup="menu"
                   >
                     {item.label}
-                    <svg width="8" height="8" viewBox="0 0 8 8" className="opacity-60">
+                    <svg width="8" height="8" viewBox="0 0 8 8" className="opacity-60" aria-hidden>
                       <path d="M1 2.5L4 5.5L7 2.5" stroke="currentColor" strokeWidth="1" fill="none" />
                     </svg>
                   </Link>
@@ -196,11 +317,12 @@ export function Nav() {
                         transition={{ duration: 0.2 }}
                         className="absolute left-1/2 top-full -translate-x-1/2 pt-3"
                       >
-                        <div className="glass-panel min-w-[260px] rounded-2xl p-2">
+                        <div className="glass-panel min-w-[260px] rounded-2xl p-2" role="menu" aria-label="Sous-menu Collections">
                           {item.sub.map((s) => (
                             <Link
                               key={s.to}
                               to={s.to}
+                              role="menuitem"
                               className="block rounded-xl px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-ivory/75 transition-colors hover:bg-accent/10 hover:text-accent"
                             >
                               {s.label}
@@ -228,13 +350,16 @@ export function Nav() {
           })}
         </nav>
         <div className="flex items-center gap-3">
-          <Link
-            to="/consultation"
+          <a
+            href={CONTACT.whatsapp}
+            target="_blank"
+            rel="noreferrer"
             className="hidden md:inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-accent transition-all hover:bg-accent hover:text-ink"
+            aria-label="Réserver sur WhatsApp"
           >
             <span className="size-1.5 rounded-full bg-accent animate-pulse" />
             Réserver
-          </Link>
+          </a>
           <button
             onClick={() => setOpen((o) => !o)}
             className="lg:hidden flex flex-col gap-1.5 p-2"
@@ -261,6 +386,8 @@ export function Nav() {
                   <button
                     onClick={() => setMobileSubOpen((v) => !v)}
                     className="flex w-full items-center justify-between py-3 font-display text-2xl text-ivory hover:text-accent"
+                    aria-expanded={mobileSubOpen}
+                    aria-controls="mobile-collections-submenu"
                   >
                     {item.label}
                     <span className={`transition-transform ${mobileSubOpen ? "rotate-180" : ""}`}>⌄</span>
@@ -268,6 +395,7 @@ export function Nav() {
                   <AnimatePresence>
                     {mobileSubOpen && (
                       <motion.div
+                        id="mobile-collections-submenu"
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
@@ -298,6 +426,15 @@ export function Nav() {
                 </Link>
               ),
             )}
+            <a
+              href={CONTACT.whatsapp}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-5 inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.2em] text-accent"
+            >
+              <span className="size-1.5 rounded-full bg-accent animate-pulse" />
+              Réserver sur WhatsApp
+            </a>
           </motion.div>
         )}
       </AnimatePresence>
