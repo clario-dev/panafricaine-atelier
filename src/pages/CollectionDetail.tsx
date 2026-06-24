@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { Expand } from "lucide-react";
-import { COLLECTIONS, PageShell, Reveal, SectionLabel } from "@/components/site/shared";
+import { COLLECTIONS, CONTACT, PageShell, Reveal, SectionLabel, SmartImage } from "@/components/site/shared";
 import { Seo } from "@/components/site/Seo";
 import { Lightbox } from "@/components/site/Lightbox";
 
@@ -29,16 +29,18 @@ export default function CollectionDetail() {
 
   return (
     <PageShell>
-      <Seo
-        title={`${c.title} — Couture Panafricaine`}
-        description={c.longDesc}
-        image={c.cover}
-      />
+      <Seo title={`${c.title} — Couture Panafricaine`} description={c.longDesc} image={c.cover.src} />
 
-      {/* Hero */}
       <section className="relative min-h-[85vh] w-full overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <img src={c.cover} alt={c.title} className="h-full w-full object-cover opacity-50" width={1280} height={1600} />
+          <SmartImage
+            image={c.cover}
+            alt={c.title}
+            loading="eager"
+            fetchPriority="high"
+            sizes="100vw"
+            className="h-full w-full object-cover opacity-50"
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/60 to-ink" />
         </div>
 
@@ -48,23 +50,18 @@ export default function CollectionDetail() {
               <SectionLabel index={`N° ${c.n}`} label={c.tag} />
             </Reveal>
             <Reveal delay={0.1}>
-              <h1 className="mt-8 max-w-5xl text-[clamp(2.5rem,8vw,7rem)] font-display text-ivory">
-                {c.title}
-              </h1>
+              <h1 className="mt-8 max-w-5xl text-[clamp(2.5rem,8vw,7rem)] font-display text-ivory">{c.title}</h1>
             </Reveal>
             <Reveal delay={0.2}>
               <p className="mt-6 font-display italic text-2xl text-accent lg:text-3xl">{c.tagline}</p>
             </Reveal>
             <Reveal delay={0.3}>
-              <p className="mt-8 max-w-2xl text-base leading-relaxed text-ivory/70 md:text-lg">
-                {c.longDesc}
-              </p>
+              <p className="mt-8 max-w-2xl text-base leading-relaxed text-ivory/70 md:text-lg">{c.longDesc}</p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* Gallery */}
       <section className="relative px-6 py-32 lg:px-16 lg:py-48">
         <div className="mx-auto max-w-7xl">
           <div className="flex items-end justify-between gap-6">
@@ -75,6 +72,7 @@ export default function CollectionDetail() {
               <button
                 onClick={() => setLightboxIndex(0)}
                 className="hidden items-center gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-ivory/60 transition-colors hover:text-accent md:inline-flex"
+                aria-label="Ouvrir la galerie en mode immersif"
               >
                 <Expand className="size-4" />
                 Mode immersif
@@ -85,11 +83,7 @@ export default function CollectionDetail() {
           <div className="mt-16 grid gap-4 md:grid-cols-2 lg:grid-cols-12 lg:gap-6">
             {c.gallery.map((img, i) => {
               const isHero = i === 0;
-              const span = isHero
-                ? "lg:col-span-7 lg:row-span-2"
-                : i % 3 === 1
-                  ? "lg:col-span-5"
-                  : "lg:col-span-6";
+              const span = isHero ? "lg:col-span-7 lg:row-span-2" : i % 3 === 1 ? "lg:col-span-5" : "lg:col-span-6";
               const aspect = isHero ? "aspect-[4/5]" : img.w > img.h ? "aspect-[4/3]" : "aspect-[3/4]";
               return (
                 <Reveal key={i} delay={i * 0.05}>
@@ -100,12 +94,12 @@ export default function CollectionDetail() {
                       className={`relative block w-full ${aspect} cursor-zoom-in`}
                       aria-label={`Agrandir : ${img.alt}`}
                     >
-                      <img
-                        src={img.src}
+                      <SmartImage
+                        image={img}
                         alt={img.alt}
-                        loading="lazy"
-                        width={img.w}
-                        height={img.h}
+                        loading={i < 2 ? "eager" : "lazy"}
+                        fetchPriority={i < 2 ? "high" : "auto"}
+                        sizes={isHero ? "(min-width: 1280px) 58vw, 100vw" : "(min-width: 1280px) 34vw, (min-width: 768px) 50vw, 100vw"}
                         className="h-full w-full object-cover transition-transform duration-[2000ms] group-hover:scale-[1.04]"
                       />
                       <div className="absolute inset-0 ring-1 ring-inset ring-border transition-all duration-700 group-hover:ring-accent/50" />
@@ -125,7 +119,6 @@ export default function CollectionDetail() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="relative px-6 pb-32 lg:px-16 lg:pb-48">
         <div className="mx-auto grid max-w-7xl gap-10 rounded-sm border border-border bg-graphite/40 p-10 lg:grid-cols-2 lg:p-16">
           <div>
@@ -134,14 +127,13 @@ export default function CollectionDetail() {
               Faites-vous tailler une pièce <span className="italic font-light text-accent">de la collection {c.title}.</span>
             </h2>
             <p className="mt-6 max-w-md text-ivory/65 leading-relaxed">
-              Un conseiller de la Maison vous accompagne dès la première consultation, jusqu'à
-              la remise cérémonielle de votre pièce.
+              Un conseiller de la Maison vous accompagne dès le premier échange, jusqu'à la remise cérémonielle de votre pièce.
             </p>
           </div>
           <div className="flex flex-col items-start justify-center gap-4 lg:items-end">
-            <Link to="/consultation" className="btn-luxe">
-              Réserver une consultation <span>→</span>
-            </Link>
+            <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer" className="btn-luxe">
+              Réserver sur WhatsApp <span>→</span>
+            </a>
             <Link to={`/collections/${next.slug}`} className="btn-ghost-luxe">
               Collection suivante : {next.title} <span>→</span>
             </Link>
@@ -150,7 +142,7 @@ export default function CollectionDetail() {
       </section>
 
       <Lightbox
-        images={c.gallery}
+        images={c.gallery.map((img) => ({ src: img.src, alt: img.alt }))}
         index={lightboxIndex}
         onClose={() => setLightboxIndex(null)}
         onIndexChange={setLightboxIndex}

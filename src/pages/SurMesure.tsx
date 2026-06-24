@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
 import surmesure1 from "@/assets/gallery-surmesure-1.jpg";
 import surmesure2 from "@/assets/gallery-surmesure-2.jpg";
-import { PageHero, PageShell, Reveal, SectionLabel } from "@/components/site/shared";
+import { CONTACT, PageHero, PageShell, Reveal, SectionLabel } from "@/components/site/shared";
 import { Seo } from "@/components/site/Seo";
 
 const PILLARS = [
@@ -106,9 +105,9 @@ export default function SurMesure() {
 
       <section className="relative px-6 pb-32 lg:px-16 lg:pb-48">
         <div className="mx-auto flex max-w-7xl justify-center">
-          <Link to="/consultation" className="btn-luxe">
-            Commencer une création sur-mesure <span>→</span>
-          </Link>
+          <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer" className="btn-luxe">
+            Commencer sur WhatsApp <span>→</span>
+          </a>
         </div>
       </section>
     </PageShell>

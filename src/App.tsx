@@ -5,7 +5,6 @@ import Atelier from "./pages/Atelier";
 import CollectionsIndex from "./pages/CollectionsIndex";
 import CollectionDetail from "./pages/CollectionDetail";
 import SurMesure from "./pages/SurMesure";
-import Consultation from "./pages/Consultation";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
@@ -27,7 +26,6 @@ export default function App() {
         <Route path="/collections" element={<CollectionsIndex />} />
         <Route path="/collections/:slug" element={<CollectionDetail />} />
         <Route path="/sur-mesure" element={<SurMesure />} />
-        <Route path="/consultation" element={<Consultation />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
