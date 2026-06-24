@@ -6,9 +6,11 @@ import embroidery from "@/assets/atelier-embroidery.jpg";
 import {
   AfricaOutline,
   COLLECTIONS,
+  CONTACT,
   PageShell,
   Reveal,
   SectionLabel,
+  SmartImage,
 } from "@/components/site/shared";
 import { Seo } from "@/components/site/Seo";
 
@@ -83,9 +85,9 @@ function Hero() {
           transition={{ duration: 1, delay: 1.3 }}
           className="mt-12 flex flex-wrap gap-4"
         >
-          <Link to="/consultation" className="btn-luxe">
-            Réserver une Consultation <span aria-hidden>→</span>
-          </Link>
+          <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer" className="btn-luxe">
+            Réserver sur WhatsApp <span aria-hidden>→</span>
+          </a>
           <Link to="/collections" className="btn-ghost-luxe">
             Découvrir les Collections
           </Link>
@@ -214,12 +216,11 @@ function CollectionsMarquee() {
               style={{ width: "min(78vw, 480px)" }}
             >
               <div className="relative aspect-[3/4] overflow-hidden bg-graphite">
-                <img
-                  src={c.cover}
+                <SmartImage
+                  image={c.cover}
                   alt={c.title}
                   loading="lazy"
-                  width={1280}
-                  height={1600}
+                  sizes="(min-width: 1024px) 30vw, 78vw"
                   className="h-full w-full object-cover transition-transform duration-[2400ms] ease-out group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
@@ -237,9 +238,7 @@ function CollectionsMarquee() {
                     Collection
                   </div>
                   <h3 className="mt-3 font-display text-3xl text-ivory lg:text-4xl">{c.title}</h3>
-                  <p className="mt-2 max-w-xs text-sm text-ivory/65 leading-relaxed">
-                    {c.tagline}
-                  </p>
+                  <p className="mt-2 max-w-xs text-sm text-ivory/65 leading-relaxed">{c.tagline}</p>
                   <div className="mt-5 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-ivory/70 transition-all duration-500 group-hover:gap-4 group-hover:text-accent">
                     Explorer
                     <span>→</span>

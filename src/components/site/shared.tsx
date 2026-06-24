@@ -216,6 +216,7 @@ export function SmartImage({
   ...props
 }: Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "srcSet" | "sizes" | "width" | "height"> & {
   image: ResponsiveAsset;
+  sizes?: string;
 }) {
   return (
     <img

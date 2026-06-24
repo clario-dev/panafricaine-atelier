@@ -140,9 +140,9 @@ export default function Atelier() {
         </div>
 
         <div className="mt-16 flex justify-center">
-          <Link to="/consultation" className="btn-luxe">
-            Réserver une consultation <span>→</span>
-          </Link>
+          <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer" className="btn-luxe">
+            Réserver sur WhatsApp <span>→</span>
+          </a>
         </div>
       </section>
     </PageShell>
