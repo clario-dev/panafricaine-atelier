@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { COLLECTIONS, PageHero, PageShell, Reveal } from "@/components/site/shared";
+import { COLLECTIONS, PageHero, PageShell, Reveal, SmartImage } from "@/components/site/shared";
 import { Seo } from "@/components/site/Seo";
 
 export default function CollectionsIndex() {
@@ -8,6 +8,7 @@ export default function CollectionsIndex() {
       <Seo
         title="Collections — Couture Panafricaine"
         description="Découvrez nos quatre collections : Agbada & Prestige, Ligne Horizon, Femmes Couture, L'Atelier Sur-Mesure."
+        image={COLLECTIONS[0]?.cover.src}
       />
       <PageHero
         eyebrow="Collections"
@@ -25,12 +26,12 @@ export default function CollectionsIndex() {
                 className="group relative grid overflow-hidden rounded-sm border border-border bg-graphite/40 transition-all duration-700 hover:border-accent/40 md:grid-cols-12"
               >
                 <div className="relative aspect-[4/5] md:col-span-5 md:aspect-auto">
-                  <img
-                    src={c.cover}
+                  <SmartImage
+                    image={c.cover}
                     alt={c.title}
-                    loading="lazy"
-                    width={1280}
-                    height={1600}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    fetchPriority={i === 0 ? "high" : "auto"}
+                    sizes="(min-width: 768px) 42vw, 100vw"
                     className="h-full w-full object-cover transition-transform duration-[2000ms] group-hover:scale-105"
                   />
                   <span className="absolute left-5 top-5 rounded-full border border-ivory/20 bg-ink/40 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.25em] text-ivory backdrop-blur">
