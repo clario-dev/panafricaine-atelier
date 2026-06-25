@@ -45,17 +45,17 @@ export type Collection = {
 };
 
 function assetPair(
-  large: { url: string },
-  thumb: { url: string },
+  large: string,
+  thumb: string,
   w: number,
   h: number,
   alt: string,
   sizes = "(min-width: 1280px) 32vw, (min-width: 768px) 42vw, 92vw",
 ): ResponsiveAsset {
   return {
-    src: large.url,
-    thumb: thumb.url,
-    srcSet: `${thumb.url} 640w, ${large.url} 1280w`,
+    src: large,
+    thumb,
+    srcSet: `${thumb} 640w, ${large} 1280w`,
     w,
     h,
     alt,
