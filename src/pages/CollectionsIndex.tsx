@@ -7,7 +7,7 @@ export default function CollectionsIndex() {
     <PageShell>
       <Seo
         title="Collections — Couture Panafricaine"
-        description="Découvrez nos quatre collections : Agbada & Prestige, Ligne Horizon, Femmes Couture, L'Atelier Sur-Mesure."
+        description="Découvrez nos quatre collections : Agbada & Prestige, Ligne Horizon, Cérémonies d'Éclat, L'Atelier Sur-Mesure."
         image={COLLECTIONS[0]?.cover.src}
       />
       <PageHero

@@ -153,16 +153,17 @@ export const COLLECTIONS: Collection[] = [
     gallery: [imgHorizonForest, imgHorizonGrey, imgSurMesureBlack],
   },
   {
-    slug: "femmes-couture",
+    slug: "ceremonies-eclat",
     n: "03",
-    title: "Femmes Couture",
-    tag: "Féminin",
-    tagline: "Couleurs sculptées & sophistication couture",
-    desc: "Teintes lumineuses, poésie des détails et finitions délicates.",
+    title: "Cérémonies d'Éclat",
+    tag: "Apparat",
+    tagline: "Tenues de fête & couleurs souveraines",
+    desc: "Teintes lumineuses, broderies précieuses et finitions de gala.",
     longDesc:
-      "Femmes Couture célèbre la couleur, la douceur des volumes et l'émotion du détail. Chaque création compose une allure sophistiquée, contemporaine et précieuse, dans l'esprit d'une maison de couture affirmée.",
+      "Cérémonies d'Éclat réunit nos pièces les plus festives : grandes tenues d'apparat pensées pour les mariages, célébrations et soirées d'exception. Couleurs sculptées, drapés généreux et détails brodés composent une allure noble, vibrante et profondément panafricaine.",
     cover: imgFemmesLilac,
     gallery: [imgFemmesLilac, imgFemmesBlue, imgAgbadaWhite],
+
   },
   {
     slug: "atelier-sur-mesure",
