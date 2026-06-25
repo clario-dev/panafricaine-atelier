@@ -239,7 +239,7 @@ export function Logo({ className = "" }: { className?: string }) {
   return (
     <Link to="/" className={`flex items-center gap-3 ${className}`} aria-label="Retour à l'accueil Couture Panafricaine">
       <img
-        src={logoAsset.url}
+        src={logoSrc}
         alt="Couture Panafricaine"
         width={96}
         height={96}
