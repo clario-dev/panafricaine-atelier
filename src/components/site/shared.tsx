@@ -1,26 +1,26 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, type ImgHTMLAttributes, type ReactNode } from "react";
-import logoAsset from "@/assets/logo.asset.json";
+import logoSrc from "@/assets/logo.jpg";
 
-import agbadaGoldLarge from "@/assets/generated/agbada-gold-large.webp.asset.json";
-import agbadaGoldThumb from "@/assets/generated/agbada-gold-thumb.webp.asset.json";
-import agbadaWhiteLarge from "@/assets/generated/agbada-white-large.webp.asset.json";
-import agbadaWhiteThumb from "@/assets/generated/agbada-white-thumb.webp.asset.json";
-import femmesBlueLarge from "@/assets/generated/femmes-blue-large.webp.asset.json";
-import femmesBlueThumb from "@/assets/generated/femmes-blue-thumb.webp.asset.json";
-import femmesLilacLarge from "@/assets/generated/femmes-lilac-large.webp.asset.json";
-import femmesLilacThumb from "@/assets/generated/femmes-lilac-thumb.webp.asset.json";
-import horizonForestLarge from "@/assets/generated/horizon-forest-large.webp.asset.json";
-import horizonForestThumb from "@/assets/generated/horizon-forest-thumb.webp.asset.json";
-import horizonGreyLarge from "@/assets/generated/horizon-grey-large.webp.asset.json";
-import horizonGreyThumb from "@/assets/generated/horizon-grey-thumb.webp.asset.json";
-import surmesureBlackLarge from "@/assets/generated/surmesure-black-large.webp.asset.json";
-import surmesureBlackThumb from "@/assets/generated/surmesure-black-thumb.webp.asset.json";
-import surmesureIndigoLarge from "@/assets/generated/surmesure-indigo-large.webp.asset.json";
-import surmesureIndigoThumb from "@/assets/generated/surmesure-indigo-thumb.webp.asset.json";
-import surmesureLimeLarge from "@/assets/generated/surmesure-lime-large.webp.asset.json";
-import surmesureLimeThumb from "@/assets/generated/surmesure-lime-thumb.webp.asset.json";
+import agbadaGoldLarge from "@/assets/generated/agbada-gold-large.webp";
+import agbadaGoldThumb from "@/assets/generated/agbada-gold-thumb.webp";
+import agbadaWhiteLarge from "@/assets/generated/agbada-white-large.webp";
+import agbadaWhiteThumb from "@/assets/generated/agbada-white-thumb.webp";
+import femmesBlueLarge from "@/assets/generated/femmes-blue-large.webp";
+import femmesBlueThumb from "@/assets/generated/femmes-blue-thumb.webp";
+import femmesLilacLarge from "@/assets/generated/femmes-lilac-large.webp";
+import femmesLilacThumb from "@/assets/generated/femmes-lilac-thumb.webp";
+import horizonForestLarge from "@/assets/generated/horizon-forest-large.webp";
+import horizonForestThumb from "@/assets/generated/horizon-forest-thumb.webp";
+import horizonGreyLarge from "@/assets/generated/horizon-grey-large.webp";
+import horizonGreyThumb from "@/assets/generated/horizon-grey-thumb.webp";
+import surmesureBlackLarge from "@/assets/generated/surmesure-black-large.webp";
+import surmesureBlackThumb from "@/assets/generated/surmesure-black-thumb.webp";
+import surmesureIndigoLarge from "@/assets/generated/surmesure-indigo-large.webp";
+import surmesureIndigoThumb from "@/assets/generated/surmesure-indigo-thumb.webp";
+import surmesureLimeLarge from "@/assets/generated/surmesure-lime-large.webp";
+import surmesureLimeThumb from "@/assets/generated/surmesure-lime-thumb.webp";
 
 export type ResponsiveAsset = {
   src: string;
@@ -45,17 +45,17 @@ export type Collection = {
 };
 
 function assetPair(
-  large: { url: string },
-  thumb: { url: string },
+  large: string,
+  thumb: string,
   w: number,
   h: number,
   alt: string,
   sizes = "(min-width: 1280px) 32vw, (min-width: 768px) 42vw, 92vw",
 ): ResponsiveAsset {
   return {
-    src: large.url,
-    thumb: thumb.url,
-    srcSet: `${thumb.url} 640w, ${large.url} 1280w`,
+    src: large,
+    thumb,
+    srcSet: `${thumb} 640w, ${large} 1280w`,
     w,
     h,
     alt,
@@ -239,7 +239,7 @@ export function Logo({ className = "" }: { className?: string }) {
   return (
     <Link to="/" className={`flex items-center gap-3 ${className}`} aria-label="Retour à l'accueil Couture Panafricaine">
       <img
-        src={logoAsset.url}
+        src={logoSrc}
         alt="Couture Panafricaine"
         width={96}
         height={96}
